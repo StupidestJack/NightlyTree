@@ -19,7 +19,7 @@ Nightly Tree 是一個開源的抗藍光遮罩工具，專為舊版 Windows 系�
 
 執行環境: 必須安裝 .NET Framework 2.0 或以上版本。
 
-[.NET Framework 2.0 官方下載點](https://www.microsoft.com/en-us/download/details.aspx?id=6041&msockid=123f4a285cf9606a062b5cb75dd26186)
+[.NET Framework 2.0 官方下載點 (x86)](https://www.microsoft.com/zh-tw/download/details.aspx?id=16614&msockid=123f4a285cf9606a062b5cb75dd26186)
 
 ## 🧭如何使用
 [下載](https://github.com/StupidestJack/NightlyTree/releases/)並執行 Release 版本即可。
