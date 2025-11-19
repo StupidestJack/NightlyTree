@@ -49,3 +49,4 @@ Nightly Tree 專案採用 MIT 授權。詳情請見 LICENSE 檔案。
 Readme 由 Google Gemini 協助撰寫。
 
  > 🤡沒錯我就是沒出息也沒朋友老找AI幫忙
+ > ~~本來應該從從容容遊刃有餘，現在是匆匆忙忙連滾帶爬~~
