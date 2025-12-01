@@ -2,39 +2,71 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Drawing; // 確保有這個引用
 using System.Text;
-using System.Windows.Forms;
+using System.Windows.Forms; // 確保有這個引用
 
 namespace NightlyTree
 {
     public partial class Form1 : Form
     {
-        private NotifyIcon notifyIcon1; // 新增這一行
+        public static bool IsFirstTime = false;
 
-        public static bool first_time = false;
+        // 【新增】標記此實例是否為系統圖示的控制者 (雖然不用圖示了，但isPrimaryForm對後續邏輯可能有用)
+        private readonly bool isPrimaryForm;
+
+        // 屬性：用於檢查 timer1 是否正在運行 (用於 Program.cs 的同步邏輯)
+        public bool IsTimerRunning => timer1.Enabled;
+
+        // 默認建構子 (必須保留給 Designer)
         public Form1()
         {
             InitializeComponent();
-            Size bounds = Screen.PrimaryScreen.Bounds.Size;
-            this.Size = bounds;
+            this.isPrimaryForm = false;
+        }
 
-            // 初始化 notifyIcon1
-            notifyIcon1 = new NotifyIcon();
-            notifyIcon1.Icon = this.Icon;
-            notifyIcon1.Visible = true;
-            notifyIcon1.MouseClick += notifyIcon1_MouseClick;
-        }   
+        // 【多螢幕建構子】
+        public Form1(Screen screen) : this()
+        {
+            this.isPrimaryForm = screen.Primary;
+
+            // 1. 設定位置和大小
+            this.Size = screen.Bounds.Size;
+            this.Location = screen.Bounds.Location;
+            this.StartPosition = FormStartPosition.Manual;
+
+            // 2. 處理 Timer 和 Opacity
+            if (this.isPrimaryForm)
+            {
+                // 主螢幕：啟用漸變效果
+                this.Opacity = 0D; // 從透明開始
+                this.timer1.Enabled = true; // 啟用計時器開始漸變
+            }
+            else
+            {
+                // 非主螢幕：直接設為最終透明度，無需漸變
+                this.timer1.Enabled = false;
+                this.Opacity = Program.opacity;
+            }
+
+            // 【刪除】所有 notifyIcon1 和 contextMenuStrip1 相關初始化邏輯
+            // 注意：您需要在 Form1.Designer.cs 中手動刪除 notifyIcon1 的定義。
+            // 由於我們保留了 timer1，請確保它仍在 Form1.Designer.cs 中。
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            notifyIcon1.Visible = true;
+            // 刪除：所有 notifyIcon1 和 IsFirstTime 的判斷邏輯
 
-            if (first_time)
+            this.BackColor = Color.FromArgb(255, 255, Program.colorG, 0);
+
+            if (!Program.actived)
             {
-                MessageBox.Show("歡迎使用 Nightly Tree！\r\n這是一個免費開源，適用於 Windows 2000 (SP3) 以上的抗藍光遮罩工具。\r\n\r\n若要調整設定，請點擊系統匣中的圖示。", "Nightly Tree - 初次使用", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Hide();
             }
         }
+
+        // 【保留】用於穿透和透明效果的核心方法
         protected override CreateParams CreateParams
         {
             get
@@ -46,11 +78,7 @@ namespace NightlyTree
             }
         }
 
-        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
-        {
-            new Form2().Show();
-        }
-
+        // 【保留】Timer 邏輯用於漸變效果
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (this.Opacity < Program.opacity)
@@ -59,8 +87,19 @@ namespace NightlyTree
             }
             else
             {
-                timer1.Stop();
+                this.timer1.Stop();
             }
         }
+
+        // 【刪除】notifyIcon1_MouseClick 等所有圖示和選單相關方法
+        // private void notifyIcon1_MouseClick(...)
+        // private void 開啟設定ToolStripMenuItem_Click(...)
+        // private void 退出ToolStripMenuItem_Click(...)
+
+        // 程式結束方法，供 Form2 的退出按鈕使用 (如果需要的話)
+        // private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        // {
+        //     Application.Exit();
+        // }
     }
 }
