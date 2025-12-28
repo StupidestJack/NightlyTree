@@ -169,11 +169,12 @@
             this.checkBox2.Font = new System.Drawing.Font("微軟正黑體", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.checkBox2.Location = new System.Drawing.Point(12, 240);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(170, 20);
+            this.checkBox2.Size = new System.Drawing.Size(206, 20);
             this.checkBox2.TabIndex = 12;
-            this.checkBox2.Text = "開機自動啟動 Nightly Tree";
+            this.checkBox2.Text = "開機自動啟動 Nightly Tree [Beta]";
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.checkBox2.Click += new System.EventHandler(this.checkBox2_Click);
             // 
             // linkLabel2
             // 
@@ -202,7 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 414);
+            this.ClientSize = new System.Drawing.Size(280, 348);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.checkBox2);

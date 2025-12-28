@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing; // 確保有這個引用
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms; // 確保有這個引用
 
@@ -10,6 +11,16 @@ namespace NightlyTree
 {
     public partial class Form1 : Form
     {
+        [DllImport("user32.dll")]
+        public static extern int SetWindowLong(IntPtr window, int index, int
+        value);
+        [DllImport("user32.dll")]
+        public static extern int GetWindowLong(IntPtr window, int index);
+
+
+        const int GWL_EXSTYLE = -20;
+        const int WS_EX_TOOLWINDOW = 0x00000080;
+        const int WS_EX_APPWINDOW = 0x00040000;
         public static bool IsFirstTime = false;
 
         // 【新增】標記此實例是否為系統圖示的控制者 (雖然不用圖示了，但isPrimaryForm對後續邏輯可能有用)
@@ -23,6 +34,8 @@ namespace NightlyTree
         {
             InitializeComponent();
             this.isPrimaryForm = false;
+            int windowStyle = GetWindowLong(Handle, GWL_EXSTYLE);
+            SetWindowLong(Handle, GWL_EXSTYLE, windowStyle | WS_EX_TOOLWINDOW);
         }
 
         // 【多螢幕建構子】
@@ -49,9 +62,6 @@ namespace NightlyTree
                 this.Opacity = Program.opacity;
             }
 
-            // 【刪除】所有 notifyIcon1 和 contextMenuStrip1 相關初始化邏輯
-            // 注意：您需要在 Form1.Designer.cs 中手動刪除 notifyIcon1 的定義。
-            // 由於我們保留了 timer1，請確保它仍在 Form1.Designer.cs 中。
         }
 
         private void Form1_Load(object sender, EventArgs e)

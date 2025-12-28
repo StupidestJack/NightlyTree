@@ -89,20 +89,7 @@ namespace NightlyTree
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox2.Checked)
-            {
-                MessageBox.Show("為避免開機自啟動出現問題，請把此軟體放置於安全的位置或資料夾。", "開機自啟動", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                string fullPath = Application.ExecutablePath;
-                File.WriteAllText(batPath, "title Nightly Tree - 自動啟動視窗\r\nstart \"\" \"" + fullPath + "\"");
-            }
-            else
-            {
-
-                if (File.Exists(batPath))
-                {
-                    File.Delete(batPath);
-                }
-            }
+            
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -113,6 +100,25 @@ namespace NightlyTree
             texts += "2. 此軟體會被截圖擷取，可能導致螢幕擷取圖片泛黃。\r\n";
             texts += "\r\n若您有能力，歡迎到此專案的 GitHub 協助更新。\r\n";
             MessageBox.Show(texts, "使用須知", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                MessageBox.Show("為避免開機自啟動出現問題，請把此軟體放置於安全的位置或資料夾。", "開機自啟動", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string fullPath = Application.ExecutablePath;
+                byte[] bytes = System.Text.Encoding.Default.GetBytes("title Nightly Tree - 自動啟動視窗\r\nstart \"\" \"" + fullPath + "\"");
+                File.WriteAllBytes(batPath, bytes);
+            }
+            else
+            {
+
+                if (File.Exists(batPath))
+                {
+                    File.Delete(batPath);
+                }
+            }
         }
     }
 }

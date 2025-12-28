@@ -68,7 +68,7 @@ namespace NightlyTree
                 }
                 else
                 {
-                    // 非主螢幕的 Form 需要手動顯示
+                     // 非主螢幕的 Form 需要手動顯示
                     screenForm.Show();
                 }
             }
