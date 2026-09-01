@@ -42,7 +42,7 @@ Nightly Tree 是一個開源的抗藍光遮罩工具，專為舊版 Windows 系�
 如果你發現任何 Bug，或有任何功能上的建議，非常歡迎到 Issue 頁面 提出。
 
 ## 📃授權條款
-Nightly Tree 專案採用 MIT 授權。詳情請見 LICENSE 檔案。
+Nightly Tree 專案採用 GPLv3 授權。詳情請見 LICENSE 檔案。
 
 ## 🙇‍♂️銘謝
 此軟體使用 Visual Studio 2022 (以及2026) 開發，並由內建的 GitHub Copilot 協助修復開發過程中的問題。
